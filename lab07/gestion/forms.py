@@ -4,7 +4,7 @@ from .models import Usuario, Evento, RegistroEvento
 
 class LoginForm(forms.Form):
     nombres = forms.CharField(max_length=100)
-    contraseña = forms.CharField(widget=forms.PasswordInput())
+    contraseña = forms.CharField(widget=forms.PasswordInput)
 
 class UsuarioForm(forms.ModelForm):
     class Meta:

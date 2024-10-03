@@ -9,13 +9,13 @@ class Usuario(models.Model):
     ]
     
     nombres = models.CharField(max_length=100)
-    apellidos = models.CharField(max_length=100, default='')  # Valor por defecto como cadena vacía
+    apellidos = models.CharField(max_length=100, default='')  
     fecha_nacimiento = models.DateField()
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True, default='O')  # Campo no obligatorio con valor por defecto
-    contraseña = models.CharField(max_length=128)  # Considera usar hashing para almacenar la contraseña
+    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True, default='O')  
+    contraseña = models.CharField(max_length=128)  
 
     def save(self, *args, **kwargs):
-        if not self.pk:  # Solo hash la contraseña si es un nuevo usuario
+        if not self.pk:  
             self.contraseña = make_password(self.contraseña)
         super().save(*args, **kwargs)
 
@@ -23,7 +23,7 @@ class Usuario(models.Model):
         return check_password(password, self.contraseña)
 
     def __str__(self):
-        return f"{self.nombres} {self.apellidos}"  # Incluye el apellido para mejor identificación
+        return f"{self.nombres} {self.apellidos}"  
 
 
 class Evento(models.Model):
