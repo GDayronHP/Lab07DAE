@@ -1,8 +1,8 @@
 {% if messages %}
 <script>
-    {% for message in messages %}
-        alert("{{ message|escapejs }}");
-    {% endfor %}
+  {% for message in messages %}
+      alert("{{ message|escapejs }}");
+  {% endfor %}
 </script>
 {% endif %}
 <!DOCTYPE html>
@@ -22,17 +22,9 @@
         <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
         <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
         <p><strong>Capacidad:</strong> {{ evento.capacidad }}</p>
-        {{sesion}} 
-            {% if usuario_id == evento.organizador_id %}
-                <a href="{% url 'actEvento' evento.id %}">Editar</a>
-                <a href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
-            {% else %}
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="evento" value="{{ evento.id }}" />
-                    <button type="submit">Ingresar</button>
-                </form>
-            {% endif %}
+        {{sesion}}
+        <a href="{% url 'actEvento' evento.id %}">Editar</a>
+        <a href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
       </li>
       {% endfor %}
     </ul>

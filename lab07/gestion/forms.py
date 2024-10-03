@@ -22,7 +22,7 @@ class EventoForm(forms.ModelForm):
         widgets = {
             'descripcion': forms.Textarea(attrs={'rows': 4}),
             'fecha': forms.DateInput(attrs={'type': 'date'}),
-            'organizador': forms.Select(attrs={'class': 'form-select'}),  # Cambia 'Select' por 'MultipleChoiceField' si es necesario
+            'organizador': forms.Select(attrs={'class': 'form-select'}),  
         }
 
 class RegistroEventoForm(forms.ModelForm):

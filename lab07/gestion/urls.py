@@ -8,7 +8,8 @@ urlpatterns = [
     path('listaEventos/', views.listaEventos, name='listaEventos'),
     path('listaRegistros/', views.listaRegistros, name='listaRegistros'),
     path('crearEvento/', views.crearEvento, name='crearEvento'),
-    # path('crearRegistro/', views.crearRegistro, name='crearRegistro'),
-    # path('actEvento/', views.actEvento, name='actEvento'),
-    # path('actRegistro/', views.actEvento, name='actRegistro'),
+    path('actEvento/<int:evento_id>/', views.actEvento, name='actEvento'),
+    path('eliminarEvento/<int:evento_id>/', views.eliminarEvento, name='eliminarEvento'),
+    path('/misEventos/', views.misEventos, name='misEventos'),
+    path('listarRegistros/', views.listarRegistros, name='listarRegistros'),
 ]
