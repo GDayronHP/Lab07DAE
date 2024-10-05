@@ -41,12 +41,14 @@
   <a class="volver" href="{% url 'menu' %}">Volver al menú</a>
 </body>
 <script>
-  const eliminar = document.getElementById('eliminar');
+  eliminar = document.getElementById('eliminar');
+
 
   eliminar.addEventListener('click', (event) => {
-    const response = window.confirm('Estás seguro de cerrar sesión');
+    let response = window.confirm('¿Estás seguro de eliminar el evento?');
     response ? '' : event.preventDefault();
   });
+
 </script>
 
 </html>

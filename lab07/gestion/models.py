@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password, check_password
 
 class Usuario(models.Model):
     SEXO_CHOICES = [
@@ -23,7 +22,7 @@ class Evento(models.Model):
     descripcion = models.TextField()
     fecha = models.DateField()
     lugar = models.CharField(max_length=255)
-    organizador = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    organizador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='eventos_organizados')
     capacidad = models.PositiveIntegerField()
 
     def __str__(self):
@@ -31,8 +30,8 @@ class Evento(models.Model):
 
 
 class RegistroEvento(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='registros')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='registros_evento')
     fecha_registro = models.DateField(auto_now_add=True)
 
     class Meta:
