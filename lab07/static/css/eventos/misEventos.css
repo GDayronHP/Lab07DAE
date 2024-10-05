@@ -1,0 +1,104 @@
+:root {
+    --primary-color: rgb(0, 247, 255);
+    --hover-color: rgba(0, 192, 199, 0.6);
+    --background-color: #121212;
+    --text-color: black;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --card-background: rgba(255, 255, 255, 0.1);
+    --card-hover-background: rgba(255, 255, 255, 0.2);
+    --font-family: 'Arial', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: var(--hover-color);
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  li {
+    color: white;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  li:hover {
+    background-color: var(--card-hover-background);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  strong {
+    color: var(--primary-color);
+  }
+
+  .acciones {
+    margin-top: 10px;
+  }
+
+  .acciones a {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: var(--primary-color);
+    color: black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .acciones a:hover {
+    background-color: var(--hover-color);
+  }
+
+  .volver {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .volver:hover {
+    background-color: var(--hover-color);
+    color: white;
+  }

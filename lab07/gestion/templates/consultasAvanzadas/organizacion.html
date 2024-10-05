@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Organización de Eventos</title>
+    <link rel="stylesheet" href="{% static 'css/consultasAvanzadas/styles.css' %}">
+</head>
+<body>
+    <h1>Consulta de Eventos Organizados por un Usuario</h1>
+    <form method="GET" action="{% url 'consultaOrganizacion' %}">
+        <label for="usuario_id">Selecciona un usuario:</label>
+        <select name="usuario_id" id="usuario_id">
+            <option value="">--Selecciona un usuario--</option>
+            {% for usuario in usuarios %}
+                <option value="{{ usuario.id }}">{{ usuario.nombres }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if eventos_organizados %}
+        <p>Total de eventos organizados: {{ eventos_organizados }}</p>
+    {% endif %}
+    <a class="volver" href="{% url 'menuConsultas' %}">Volver al menu</a>
+</body>
+</html>

@@ -1,41 +1,66 @@
+{% load static %}
 {% if messages %}
 <script>
-    {% for message in messages %}
-        alert("{{ message|escapejs }}");
-    {% endfor %}
+  {% for message in messages %}
+  alert("{{ message|escapejs }}");
+  {% endfor %}
 </script>
 {% endif %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Lista de Eventos</title>
-  </head>
-  <body>
-    <h1>Lista de Eventos</h1>
-    <a href="{% url 'crearEvento' %}">Crear Evento</a>
-    <ul>
-      {% for evento in eventos %}
-      <li>
-        <h2>{{ evento.titulo }}</h2>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Eventos</title>
+  <link rel="stylesheet" href="{% static 'css/eventos/listar.css' %}">
+</head>
+
+<body>
+  <h1>Lista de Eventos</h1>
+  <a href="{% url 'crearEvento' %}">Crear Evento</a>
+  <ul class="eventos">
+    {% for evento in eventos %}
+    <li class="evento">
+      <h2>{{ evento.titulo }}</h2>
+      <div class="contenido">
         <p>{{ evento.descripcion }}</p>
         <p><strong>Fecha:</strong> {{ evento.fecha }}</p>
         <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
         <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
         <p><strong>Capacidad:</strong> {{ evento.capacidad }}</p>
-        {{sesion}} 
-            {% if usuario_id == evento.organizador_id %}
-                <a href="{% url 'actEvento' evento.id %}">Editar</a>
-                <a href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
-            {% else %}
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="evento" value="{{ evento.id }}" />
-                    <button type="submit">Ingresar</button>
-                </form>
-            {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="{% url 'menu' %}">Volver al menú</a>
-  </body>
+        {{ sesion }}
+        {% if usuario_id == evento.organizador_id %}
+        <a class="option" href="{% url 'actEvento' evento.id %}">Editar</a>
+        <a class="option" id="eliminar" href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
+        {% endif %}
+      </div>
+      <div class="acciones">
+        <form method="POST" action="">
+          {% csrf_token %}
+          <input type="hidden" name="evento" value="{{ evento.id }}" />
+          <button type="submit">Ingresar</button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <a class="volver" href="{% url 'menu' %}">Volver al menú</a>
+</body>
+<script>
+  const eventos = document.querySelectorAll(".evento");
+  eventos.forEach(evento => {
+    evento.addEventListener("click", (e) => {
+      evento.classList.toggle("active");
+    });
+  });
+
+  const eliminar = document.getElementById('eliminar');
+
+  eliminar.addEventListener('click', (event) => {
+    const response = window.confirm('Estás seguro de cerrar sesión');
+    response ? '' : event.preventDefault();
+  });
+</script>
+
 </html>

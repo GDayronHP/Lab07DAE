@@ -1,25 +1,33 @@
+{% load static %}
 <!-- login.html -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
-<body>
-    <h1>Iniciar Sesión</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Iniciar Sesión</button>
-    </form>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
+<body>
+    <div class="container">
+        <div class="formContainer">
+            <h1>Iniciar Sesión</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
                 <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
 </body>
+
 </html>

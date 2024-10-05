@@ -1,7 +1,8 @@
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Usuario, Evento, RegistroEvento 
-from .forms import LoginForm, EventoForm, RegistroEventoForm
+from .forms import LoginForm, EventoForm, UpdateEventoForm
 
 def index(request):
     if request.method == 'POST':
@@ -26,6 +27,12 @@ def index(request):
     
     return render(request, 'login.html', {'form': form})  
 
+def logout(request):
+    if 'user_id' in request.session:
+        del request.session['user_id']
+        del request.session['user_name']
+        messages.success(request, "Has cerrado sesión exitosamente.")
+    return redirect('index')
 
 def menu(request):
     return render(request, 'menu.html')
@@ -55,31 +62,35 @@ def listaEventos(request):
 
 
 def crearEvento(request):
+    usuario = Usuario.objects.filter(id=request.session.get('user_id')).first()
+
     if request.method == 'POST':
         form = EventoForm(request.POST)
         if form.is_valid():
-            form.save()
+            evento = form.save(commit=False)
+            evento.organizador = usuario
+            evento.save()  
             return redirect('listaEventos')
     else:
         form = EventoForm()
+    
     return render(request, 'eventos/crearEvento.html', {'form': form})
 
 def listaRegistros(request):
     return render(request, 'listarRegistros.html')
 
 def actEvento(request, evento_id):
-    evento = get_object_or_404(Evento, id=evento_id)
-
+    evento = get_object_or_404(Evento, pk=evento_id)
     if request.method == 'POST':
-        form = EventoForm(request.POST, instance=evento)
+        form = UpdateEventoForm(request.POST, instance=evento)
         if form.is_valid():
-            form.save()
-            messages.success(request, "El evento ha sido actualizado exitosamente.")
-            return redirect('listaEventos')  
+            evento = form.save(commit=False)
+            evento.save()
+            return redirect('listaEventos')
     else:
-        form = EventoForm(instance=evento)
-
-    return render(request, 'eventos/actualizarEvento.html', {'form': form, 'evento': evento})
+        form = UpdateEventoForm(instance=evento)
+    
+    return render(request, 'eventos/actualizarEvent.html', {'form': form})
 
 def eliminarEvento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
@@ -95,3 +106,44 @@ def misEventos(request):
 def listarRegistros(request):
     registros = RegistroEvento.objects.all()
     return render(request, 'listarRegistros.html', {'registros': registros})
+
+def menuConsultas(request):
+    return render (request, 'consultasAvanzadas/menu.html')
+
+def consultaUsuarios(request):
+    evento_id = request.GET.get('evento_id') 
+    if evento_id:
+        usuarios_registrados = RegistroEvento.objects.filter(evento_id=evento_id).count()
+    else:
+        usuarios_registrados = None
+
+    eventos = Evento.objects.all()
+    return render(request, 'consultasAvanzadas/usuarios.html', {
+        'usuarios_registrados': usuarios_registrados,
+        'eventos': eventos
+    })
+
+
+def consultaOrganizacion(request):
+    usuario_id = request.GET.get('usuario_id')
+    eventos_organizados = 0
+    if usuario_id:
+        eventos_organizados = Evento.objects.filter(organizador_id=usuario_id).count()
+
+    usuarios = Usuario.objects.all()
+    return render(request, 'consultasAvanzadas/organizacion.html', {
+        'eventos_organizados': eventos_organizados,
+        'usuarios': usuarios
+    })
+
+
+def consultaEventos(request):
+    ahora = timezone.now()
+    mes_actual = ahora.month
+    anio_actual = ahora.year
+    
+    eventos_mes = Evento.objects.filter(fecha__month=mes_actual, fecha__year=anio_actual).count()
+    
+    return render(request, 'consultasAvanzadas/eventos.html', {
+        'eventos_mes': eventos_mes
+    })

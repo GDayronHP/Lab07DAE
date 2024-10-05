@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Formulario para actualizar eventos.">
+    <meta name="author" content="Tu Nombre">
+    <title>Actualizar Evento</title>
+    <link rel="stylesheet" href="{% static 'css/eventos/actualizar.css' %}">
+</head>
+
+<body>
+
+    {% if mensaje %}
+    <script>
+        alert("{{ mensaje|escapejs }}");
+    </script>
+    {% endif %}
+
+    <h1>Actualizar Evento: {{ evento.titulo }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Actualizar Evento</button>
+    </form>
+
+    <a href="{% url 'listaEventos' %}">Volver a la lista de eventos</a>
+
+</body>
+
+</html>

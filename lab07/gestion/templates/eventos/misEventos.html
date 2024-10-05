@@ -1,33 +1,52 @@
+{% load static %}
 {% if messages %}
 <script>
   {% for message in messages %}
-      alert("{{ message|escapejs }}");
+  alert("{{ message|escapejs }}");
   {% endfor %}
 </script>
 {% endif %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Lista de Eventos</title>
-  </head>
-  <body>
-    <h1>Lista de Eventos</h1>
-    <a href="{% url 'crearEvento' %}">Crear Evento</a>
-    <ul>
-      {% for evento in eventos %}
-      <li>
-        <h2>{{ evento.titulo }}</h2>
-        <p>{{ evento.descripcion }}</p>
-        <p><strong>Fecha:</strong> {{ evento.fecha }}</p>
-        <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
-        <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
-        <p><strong>Capacidad:</strong> {{ evento.capacidad }}</p>
-        {{sesion}}
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Eventos</title>
+  <link rel="stylesheet" href="{% static 'css/eventos/misEventos.css' %}">
+</head>
+
+<body>
+  <h1>Mis eventos</h1>
+  <a href="{% url 'crearEvento' %}">Crear Evento</a>
+  <br>
+  <br>
+  <ul>
+    {% for evento in eventos %}
+    <li>
+      <h2>{{ evento.titulo }}</h2>
+      <p>{{ evento.descripcion }}</p>
+      <p><strong>Fecha:</strong> {{ evento.fecha }}</p>
+      <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
+      <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
+      <p><strong>Capacidad:</strong> {{ evento.capacidad }}</p>
+      {{ sesion }}
+      <div class="acciones">
         <a href="{% url 'actEvento' evento.id %}">Editar</a>
-        <a href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="{% url 'menu' %}">Volver al menú</a>
-  </body>
+        <a id="eliminar" href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <a class="volver" href="{% url 'menu' %}">Volver al menú</a>
+</body>
+<script>
+  const eliminar = document.getElementById('eliminar');
+
+  eliminar.addEventListener('click', (event) => {
+    const response = window.confirm('Estás seguro de cerrar sesión');
+    response ? '' : event.preventDefault();
+  });
+</script>
+
 </html>

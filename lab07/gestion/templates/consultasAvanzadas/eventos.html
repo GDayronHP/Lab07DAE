@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos del Mes</title>
+    <link rel="stylesheet" href="{% static 'css/consultasAvanzadas/styles.css' %}">
+
+</head>
+<body>
+    <h1>Eventos que se Llevan a Cabo Este Mes</h1>
+    <p>Total de eventos: {{ eventos_mes }}</p>
+    <a class="volver" href="{% url 'menuConsultas' %}">Volver al menu</a>
+</body>
+</html>

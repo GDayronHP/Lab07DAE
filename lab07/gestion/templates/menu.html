@@ -1,13 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
 </head>
+
 <body>
-    <a href="{% url 'listaEventos' %}">Lista de Eventos</a>
-    <a href="{% url 'misEventos' %}">Mis eventos</a>
-    <a href="{% url 'listarRegistros' %}">Lista de registros</a>
+    <div class="link-container">
+        <a href="{% url 'listaEventos' %}">Lista de Eventos</a>
+        <a href="{% url 'misEventos' %}">Mis Eventos</a>
+        <a href="{% url 'listarRegistros' %}">Lista de Registros</a>
+        <a href="{% url 'menuConsultas' %}">Consultas avanzadas</a>
+        <a class="sesion" id="cerrarSesion" href="{% url 'logout' %}">Cerrar sesión</a>
+    </div>
 </body>
 </html>
