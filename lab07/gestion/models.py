@@ -14,14 +14,6 @@ class Usuario(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True, null=True, default='O')  
     contraseña = models.CharField(max_length=128)  
 
-    def save(self, *args, **kwargs):
-        if not self.pk:  
-            self.contraseña = make_password(self.contraseña)
-        super().save(*args, **kwargs)
-
-    def check_password(self, password):
-        return check_password(password, self.contraseña)
-
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"  
 
