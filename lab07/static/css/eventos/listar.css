@@ -97,4 +97,5 @@
     background-color: var(--aHoverColor);
     border: 2px solid var(--aColor);
     color: white;
+    cursor: pointer;
   }

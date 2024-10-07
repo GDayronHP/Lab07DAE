@@ -30,10 +30,6 @@
         <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
         <p><strong>Capacidad:</strong> {{ evento.capacidad }}</p>
         {{ sesion }}
-        {% if usuario_id == evento.organizador_id %}
-        <a class="option" href="{% url 'actEvento' evento.id %}">Editar</a>
-        <a class="option" id="eliminar" href="{% url 'eliminarEvento' evento.id %}">Eliminar</a>
-        {% endif %}
       </div>
       <div class="acciones">
         <form method="POST" action="">
@@ -45,22 +41,26 @@
     </li>
     {% endfor %}
   </ul>
-  <a class="volver" href="{% url 'menu' %}">Volver al menú</a>
+  <a onclick="window.history.back()">Volver al menú</a>
 </body>
 <script>
   const eventos = document.querySelectorAll(".evento");
+  {% comment %} const confirmaciones = document.querySelectorAll("button[type='submit']") {% endcomment %}
+
   eventos.forEach(evento => {
     evento.addEventListener("click", (e) => {
       evento.classList.toggle("active");
     });
   });
 
-  const eliminar = document.getElementById('eliminar');
+  {% comment %} confirmaciones.forEach(confirmacion => {
+    confirmacion.addEventListener("click", (e) => {
+      if (!confirm("¿Estás seguro de ingresar al evento?")) {
+        e.preventDefault();
+      }
+    });
+  }); {% endcomment %}
 
-  eliminar.addEventListener('click', (event) => {
-    const response = window.confirm('¿Estás seguro de eliminar el evento?');
-    response ? '' : event.preventDefault();
-  });
 </script>
 
 </html>

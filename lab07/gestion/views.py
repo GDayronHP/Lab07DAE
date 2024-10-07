@@ -38,20 +38,18 @@ def menu(request):
     return render(request, 'menu.html')
 
 def listaEventos(request):
-    eventos = Evento.objects.all()
     usuario_id = request.session['user_id']
+    eventos = Evento.objects.exclude(organizador = usuario_id).order_by('fecha')
 
     if request.method == 'POST':
         evento_id = request.POST.get('evento')
         evento = get_object_or_404(Evento, id=evento_id)
+
         usuario = Usuario.objects.filter(id=usuario_id).first()
 
         if not RegistroEvento.objects.filter(evento=evento, usuario=usuario).exists():
-            if not (usuario_id == evento.organizador_id):
-                RegistroEvento.objects.create(evento=evento, usuario=usuario)
-                messages.success(request, "Te has registrado en el evento exitosamente.")
-            else:
-                messages.error(request, "No puedes ingresar a tu mismo evento.")
+            RegistroEvento.objects.create(evento=evento, usuario=usuario)
+            messages.success(request, "Te has registrado en el evento exitosamente.")
         else:
             messages.error(request, "Ya estás registrado en este evento.")
 

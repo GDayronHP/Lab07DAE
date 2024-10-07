@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('menu/', views.menu, name='menu'),
     path('listaEventos/', views.listaEventos, name='listaEventos'),
+    path('listaEventos/<int:user_id>/', views.listaEventos, name='listaEventos_opcional'),
     path('listaRegistros/', views.listaRegistros, name='listaRegistros'),
     path('crearEvento/', views.crearEvento, name='crearEvento'),
     path('actEvento/<int:evento_id>/', views.actEvento, name='actEvento'),
